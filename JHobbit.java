@@ -32,7 +32,7 @@ class ValidateImage extends JPanel{
     }    
 }
 
-public class Functions{
+public class JHobbit{
     static JFrame frame;
     static ValidateImage validatepanel=new ValidateImage();
     
@@ -45,17 +45,12 @@ public class Functions{
 
     static Object obj;
     static Thread t;
-    static Semaphore semaphore;
         
     static public void ValidateProgram(String _username,String _password) {
         
-        semaphore = new Semaphore(1,true);
-        
         obj = new Object();
         synchronized(obj){
-        try{
-            semaphore.acquire();
-            
+        try{     
         usern = _username;
         pass = _password;
         
@@ -116,7 +111,7 @@ public class Functions{
                   try{ 
                       passwordok=true;
                       frame.setVisible(false);
-                      semaphore.release();
+                      
                   }
                   catch(Exception err){
                   }
