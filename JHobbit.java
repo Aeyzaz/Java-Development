@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package javadevelopment;
 
@@ -19,9 +14,9 @@ import javax.swing.*;
  *
  * @author Azaz
  */
-class ValidateImage extends JPanel{
+class ValidateImageInvalid extends JPanel{
 
-    public ValidateImage() {
+    public ValidateImageInvalid() {
         setSize(100,100);
     }
 
@@ -32,10 +27,24 @@ class ValidateImage extends JPanel{
     }    
 }
 
+class ValidateImageValid extends JPanel{
+
+    public ValidateImageValid() {
+        setSize(100,100);
+    }
+
+    Image bg = new ImageIcon("images.gif").getImage();
+    @Override
+    public void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }    
+}
+
 public class JHobbit{
     static JFrame frame;
-    static ValidateImage validatepanel=new ValidateImage();
-    
+    static JPanel panel;
+    static ValidateImageInvalid validatepanelinvalid=new ValidateImageInvalid();
+    static ValidateImageValid validatepanelvalid=new ValidateImageValid();
     static JTextField username_txt = new JTextField();
     static JPasswordField password_txt = new JPasswordField();
     static String usern;
@@ -66,13 +75,14 @@ public class JHobbit{
     
         frame = new JFrame("Validate");
         frame.setLayout(null);
-        frame.setSize(390,250);
+        frame.setSize(380,240);
         frame.setVisible(true);
         frame.setLocation((int)width/3,(int)height/3);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.GRAY);
+        frame.setResizable(false);
         
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         //panel.setBackground(Color.red);
         panel.setLocation(5,5);
         panel.setSize(365,200);
@@ -110,16 +120,24 @@ public class JHobbit{
                   
                   try{ 
                       passwordok=true;
-                      frame.setVisible(false);
+                      panel.remove(validatepanelinvalid);
+                      panel.add(validatepanelvalid);
+                      panel.repaint();
+                      panel.revalidate();
+                     // frame.setVisible(false);
                       
                   }
                   catch(Exception err){
                   }
-                  frame.dispose();
+                 // frame.dispose();
                   //System.out.println( IsUserValidated() );
               }
               else {
                     passwordok = false;
+                    panel.remove(validatepanelvalid);
+                    panel.add(validatepanelinvalid);
+                    panel.repaint();
+                    panel.revalidate();
                    // System.out.println(IsUserValidated());
                 }
             }
@@ -129,10 +147,12 @@ public class JHobbit{
         
         // --------------------- //
         
-        validatepanel.setLocation(230, 20);
-        validatepanel.setBackground(Color.red);
+        validatepanelinvalid.setLocation(230, 20);
+        validatepanelinvalid.setBackground(Color.red);
         
-        panel.add(validatepanel);
+        validatepanelvalid.setLocation(230, 20);
+        validatepanelvalid.setBackground(Color.red);
+        
         
         //----------------------//
         
