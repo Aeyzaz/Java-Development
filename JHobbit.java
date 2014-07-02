@@ -8,7 +8,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Semaphore;
+import java.util.ArrayList;
 import javax.swing.*;
 /**
  *
@@ -189,12 +189,35 @@ public class JHobbit{
         return max;
     }
     
+    static int FindMaxInArray(ArrayList arr) {
+        int max = (int)arr.get(0);
+        for (int i = 0; i < arr.size(); i++) {
+
+            if (((int)arr.get(i)) > max) {
+                max = (int)arr.get(i);
+            }
+        }
+        return max;
+    }
+    
+    
     static int FindMinInArray(int[] arr) {
         int min = arr[0];
         for (int i = 0; i < arr.length; i++) {
 
             if (arr[i] < min) {
                 min = arr[i];
+            }
+        }
+        return min;
+    }
+    
+    static int FindMinInArray(ArrayList arr) {
+        int min = (int)arr.get(0);
+        for (int i = 0; i < arr.size(); i++) {
+
+            if (((int)arr.get(i)) < min) {
+                min = (int)arr.get(i);
             }
         }
         return min;
