@@ -4,12 +4,18 @@ package javadevelopment;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Azaz
@@ -41,19 +47,19 @@ class ValidateImageValid extends JPanel{
 }
 
 public class JHobbit{
-    static JFrame frame;
-    static JPanel panel;
-    static ValidateImageInvalid validatepanelinvalid=new ValidateImageInvalid();
-    static ValidateImageValid validatepanelvalid=new ValidateImageValid();
-    static JTextField username_txt = new JTextField();
-    static JPasswordField password_txt = new JPasswordField();
-    static String usern;
-    static String pass;
-    static String userentered;
-    static boolean passwordok=false;
+   private static JFrame frame;
+   private static JPanel panel;
+   private static ValidateImageInvalid validatepanelinvalid=new ValidateImageInvalid();
+   private static ValidateImageValid validatepanelvalid=new ValidateImageValid();
+   private static JTextField username_txt = new JTextField();
+   private static JPasswordField password_txt = new JPasswordField();
+   private static String usern;
+   private static String pass;
+   private static String userentered;
+   private static boolean passwordok=false;
 
-    static Object obj;
-    static Thread t;
+   private static Object obj;
+   private static Thread t;
         
     static public void ValidateProgram(String _username,String _password) {
         
@@ -222,7 +228,106 @@ public class JHobbit{
         }
         return min;
     }
+    
+    static public String SaveAFile(){
+    JFileChooser file  = new JFileChooser();
+    file.showSaveDialog(null);
+    file.setFileFilter(null);
+    String p = file.getSelectedFile().getPath();
+    return p;
+    }
+    
+    static public String SaveAFile(String ExtName,String Ext){
+        String p = null;
+        try {
+            JFileChooser file = new JFileChooser();
+            file.removeChoosableFileFilter(file.getFileFilter());
+            FileNameExtensionFilter fext = new FileNameExtensionFilter(ExtName, Ext);
+            file.setFileFilter(fext);
+            file.showSaveDialog(null);
+
+            p = file.getSelectedFile().getPath();
+
+        } catch (Exception err) {
+
+        }
+
+        return p;
+    }
+    
+    static public String OpenAFile(){
+    String f=null;
+    try{
+    JFileChooser file = new JFileChooser();
+    file.showOpenDialog(null);
+    f = file.getSelectedFile().getPath();
+    
+    }
+    catch(Exception err){
+    
+    }
+    
+    return f;
+    }
+    
+    static public String OpenAFile(String ExtName,String Ext){
+    String f=null;
+    try{
+    JFileChooser file = new JFileChooser();
+    file.removeChoosableFileFilter(file.getFileFilter());
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(ExtName,Ext);
+    file.addChoosableFileFilter(filter);
+    file.showOpenDialog(null);
+    f = file.getSelectedFile().getPath();
+    
+    }
+    catch(HeadlessException err){
+    
+    }
+    
+    return f;
+    }
    
+    static public BufferedWriter CreateFile(String FileName){
+       FileWriter fwrite=null;
+       BufferedWriter bwrite=null; 
+       try {
+            fwrite = new FileWriter(FileName);
+            bwrite = new BufferedWriter(fwrite);
+            
+        } catch (Exception err) {
+            JOptionPane.showMessageDialog(null, "Unable To Create File");
+        }
+       return bwrite;
+    }
+    
+    static public void WriteBufferedFile(BufferedWriter _bufferedwriter,String text){
+        try {
+            _bufferedwriter.write(text);
+            _bufferedwriter.close();
+        } catch (Exception err) {
+            JOptionPane.showMessageDialog(null, "Writing Failed");
+        }
+    }
+    
+    static public String ReadFile(String filename){
+        FileReader fread=null;
+        BufferedReader bread =null;
+        String data="";
+        String tempread=null;
+        try {
+            fread = new FileReader(filename);
+            bread = new BufferedReader(fread);
+            while((tempread=bread.readLine())!=null){
+            data+=tempread;
+            }
+            bread.close();
+        } catch (Exception err) {
+        JOptionPane.showMessageDialog(null, "Unable To Read File");
+        }
+        
+    return data;
+    }
     
 }
 
